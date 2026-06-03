@@ -42,7 +42,7 @@ api.interceptors.response.use(
       if (status === 401) {
         console.error('[TMDB] 401 Unauthorized — check VITE_TMDB_API_KEY in .env');
       } else if (status === 404) {
-        console.warn(`[TMDB] 404 Not Found:`, error.config.url);
+        console.warn(`[TMDB] 404 Not Found:`, error.config?.url);
       } else {
         console.error(`[TMDB] ${status}:`, message);
       }

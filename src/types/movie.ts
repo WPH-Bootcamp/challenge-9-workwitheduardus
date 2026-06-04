@@ -106,7 +106,7 @@ export type MoviesResponse = PaginatedResponse<Movie>;
 
 // Store / State Types
 export interface FavoriteMovie extends Movie {
-  added_at: number; // unix timestamp
+  added_at: number; 
 }
 
 export interface WatchlistMovie extends Movie {

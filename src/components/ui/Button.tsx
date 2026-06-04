@@ -1,38 +1,107 @@
 import * as React from 'react';
-import {Slot} from '@radix-ui/react-slot';
-import {cva, type VariantProps} from 'class-variance-authority';
-import {cn} from '../../lib/utils';
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold font-sans transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95',
+  [
+    // Layout
+    'inline-flex items-center justify-center flex-shrink-0',
+    'gap-[var(--space-2)]',
+    'whitespace-nowrap cursor-pointer',
+    // Typography
+    '[font-family:var(--font-poppins)]',
+    'font-semibold',
+    // Shape
+    'rounded-[var(--radius-full)]',
+    'border-0',
+    // Transition & accessibility
+    'transition-[background-color,border-color,opacity,transform] duration-200',
+    'focus-visible:outline-none',
+    'focus-visible:ring-2',
+    'focus-visible:ring-[var(--color-brand-red)]',
+    'focus-visible:ring-offset-2',
+    'disabled:pointer-events-none disabled:opacity-50',
+    'active:scale-[0.97]',
+  ].join(' '),
   {
     variants: {
       variant: {
-        // Primary
-        default: 'bg-brand-red text-white hover:bg-brand-red-900',
-        // Secondary
-        secondary:
-          'bg-surface/60 text-white border border-border hover:border-color-gray-700 backdrop-blur-xl',
-        // Ghost
-        ghost: 'text-white hover:bg-white/10',
-        // Destructive
-        destructuve: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-        // Link
-        link: 'text-brand-red underline-offset-4 hover:underline rounded-none',
-        // Icon
-        icon: 'bg-surface/60 text-white border border-border-light hover:border-white/40 backdrop-blur-xl',
-        'icon-active': 'bg-brand-red/80 text-white border border-brand-red backdrop-blur-xl',
-      },
-      size: {
-        // Large
-        lg: 'h-[52px] px-5 text-base',
         // Default
-        default: 'h-[44px] px-4 text-sm',
-        // Small
-        sm: 'h-[38px] px-3 text-[13px]',
+        default: [
+          'bg-[var(--color-brand-red)]',
+          'text-[var(--color-gray-white)]',
+          'hover:bg-[var(--color-brand-red-900)]',
+        ].join(' '),
+
+      // Secondary
+        secondary: [
+          '[background-color:rgba(10,13,18,0.6)]',
+          'text-[var(--color-gray-white)]',
+          'border border-[var(--color-gray-800)]',
+          '[backdrop-filter:blur(20px)] [-webkit-backdrop-filter:blur(20px)]',
+          'hover:border-[var(--color-gray-500)]',
+        ].join(' '),
+
+        // Ghost:
+        ghost: [
+          'text-[var(--color-gray-white)]',
+          'hover:[background-color:rgba(255,255,255,0.1)]',
+        ].join(' '),
+
+        // Destructive 
+        destructive: ['bg-destructive text-destructive-foreground', 'hover:opacity-90'].join(' '),
+
+        // Link 
+        link: [
+          'text-[var(--color-brand-red)]',
+          'underline-offset-4 hover:underline',
+          'rounded-none',
+        ].join(' '),
+
         // Icon
-        icon: 'h-[52px] w-[52px]',
-        'icon-sm': 'h-[44px] w-[44px]',
+        icon: [
+          '[background-color:rgba(10,13,18,0.6)]',
+          'text-[var(--color-gray-white)]',
+          'border border-[var(--color-gray-900)]',
+          '[backdrop-filter:blur(20px)] [-webkit-backdrop-filter:blur(20px)]',
+          'hover:border-[var(--color-gray-500)]',
+          'active:scale-[0.88]',
+        ].join(' '),
+
+        //Icon
+        'icon-active': [
+          '[background-color:rgba(150,18,0,0.8)]',
+          'text-[var(--color-gray-white)]',
+          'border border-[var(--color-brand-red)]',
+          '[backdrop-filter:blur(20px)] [-webkit-backdrop-filter:blur(20px)]',
+          'active:scale-[0.88]',
+        ].join(' '),
+      },
+
+      size: {
+        //Large
+        lg: [
+          'h-[var(--btn-h-lg)]',
+          'px-[var(--space-5)]',
+          '[font-size:var(--fs-text-md)]',
+          '[line-height:var(--lh-text-md)]',
+        ].join(' '),
+
+        // Default
+        default: [
+          'h-[var(--btn-h-sm)]',
+          'px-[var(--space-4)]',
+          '[font-size:var(--fs-text-sm)]',
+          '[line-height:var(--lh-text-sm)]',
+        ].join(' '),
+
+        // Small
+        sm: ['h-[38px]', 'px-[var(--space-3)]', '[font-size:13px]'].join(' '),
+
+        // Icon
+        icon: ['h-[var(--btn-icon)]', 'w-[var(--btn-icon)]'].join(' '),
+        'icon-sm': ['h-[var(--btn-h-sm)]', 'w-[var(--btn-h-sm)]'].join(' '),
       },
     },
     defaultVariants: {

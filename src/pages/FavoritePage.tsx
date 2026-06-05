@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { Star, Calendar, Trash2 } from 'lucide-react';
 import { useFavorites, useMovieStore } from '@/store/movieStore';
 import { useToast } from '../components/Toastprovider';
-import { Footer } from '@/components/Footer';
-import { FavoritesEmpty } from '@/components/ErrorState';
+import { Footer } from '../components/Footer';
+import { FavoritesEmpty } from '../components/ErrorState';
 import { Button } from '../components/ui/Button';
-import { getPosterUrl, formatRating, formatDate } from '@/lib/utils';
+import { getPosterUrl, formatRating, formatDate } from '../lib/utils';
 
 const listVariants = {
   hidden: {},

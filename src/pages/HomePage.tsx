@@ -14,7 +14,7 @@ const pageVariants: Variants = {
   animate: { opacity: 1 },
   exit: { opacity: 0 },
 };
- 
+  
 const gridVariants: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.05 } },
@@ -28,10 +28,22 @@ const gridItemVariants: Variants = {
 export default function HomePage() {
   const [activeGenreId, setActiveGenreId] = useState(0);
 
-  const { data: popularData, isLoading: popularLoading } = usePopularMovies();
+  const {
+    data: popularData,
+    isLoading: popularLoading,
+    isError: popularError,
+  } = usePopularMovies();
   const { data: nowPlayingData, isLoading: nowPlayingLoading } = useNowPlayingMovies();
-  const { data: trendingData, isLoading: trendingLoading } = useTrendingMovies();
-  const { data: topRatedData, isLoading: topRatedLoading } = useTopRatedMovies();
+  const {
+    data: trendingData,
+    isLoading: trendingLoading,
+    isError: trendingError,
+  } = useTrendingMovies();
+  const {
+    data: topRatedData,
+    isLoading: topRatedLoading,
+    isError: topRatedError,
+  } = useTopRatedMovies();
   const { data: genres } = useGenres();
 
   const heroMovie = popularData?.results?.find((m) => m.backdrop_path);
@@ -61,10 +73,11 @@ export default function HomePage() {
         title="🔥 Trending This Week"
         movies={trendingData?.results}
         isLoading={trendingLoading}
+        isError={trendingError}
         showRank
       />
 
-      {/* New Releases */}
+      {/* New Releases + Genre Filter */}
       <section className="py-[var(--space-10)]">
         <div className="page-section">
           <h2 className="text-display-sm font-bold tracking-tight text-[var(--color-gray-white)] mb-[var(--space-6)]">
@@ -99,7 +112,12 @@ export default function HomePage() {
       </section>
 
       {/* Top Rated */}
-      <MovieRow title="⭐ Top Rated" movies={topRatedData?.results} isLoading={topRatedLoading} />
+      <MovieRow
+        title="⭐ Top Rated"
+        movies={topRatedData?.results}
+        isLoading={topRatedLoading}
+        isError={topRatedError}
+      />
 
       <Footer />
     </motion.div>

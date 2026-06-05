@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Heart, Tv, Menu, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useFavoriteCount } from '@/store/movieStore';
+import { cn } from '../lib/utils';
+import { useFavoriteCount } from '../store/movieStore';
 
 // Navlink
 const NAV_LINKS = [

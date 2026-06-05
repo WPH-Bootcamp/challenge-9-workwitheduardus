@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, XCircle } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 
 interface Toast {
   id: string;
@@ -37,18 +37,65 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="toast"
+              style={{
+                display: 'inline-flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: '0 24px',
+                gap: '12px',
+                height: '52px',
+                background: 'rgba(0, 0, 0, 0.7)',
+                backdropFilter: 'blur(40px)',
+                WebkitBackdropFilter: 'blur(40px)',
+                borderRadius: 'var(--radius-xl)',
+                whiteSpace: 'nowrap',
+              }}
             >
               {toast.type === 'add' || toast.type === 'info' ? (
-                <div className="toast__icon toast__icon--add">
-                  <CheckCircle2 size={14} />
+                <div
+                  style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    background: '#FFFFFF',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <Check size={13} color="#000000" strokeWidth={3} />
                 </div>
               ) : (
-                <div className="toast__icon toast__icon--remove">
-                  <XCircle size={14} />
+                <div
+                  style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    background: '#E41D02',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <X size={13} color="#FFFFFF" strokeWidth={3} />
                 </div>
               )}
-              <span className="toast__message">{toast.message}</span>
+
+              {/* Message */}
+              <span
+                style={{
+                  fontFamily: 'var(--font-poppins)',
+                  fontSize: 'var(--fs-text-md)',
+                  fontWeight: 500,
+                  color: '#FFFFFF',
+                  lineHeight: '1',
+                }}
+              >
+                {toast.message}
+              </span>
             </motion.div>
           ))}
         </AnimatePresence>

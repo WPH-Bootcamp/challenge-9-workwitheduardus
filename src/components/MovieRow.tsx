@@ -3,7 +3,7 @@ import { ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { MovieCard } from '../components/MovieCard';
 import { MovieCardSkeletonRow } from '../components/MovieCardSkeleton';
-import { ErrorState } from '@/components/../components/ErrorState';
+import { ErrorState } from '../components/ErrorState';
 import type { Movie } from '../types/movie';
 
 

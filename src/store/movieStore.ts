@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import type { Movie, FavoriteMovie, WatchlistMovie, MovieStoreState } from '@/types/movie';
-import { STORAGE_KEYS } from '@/lib/constants';
+import type { Movie, FavoriteMovie, WatchlistMovie, MovieStoreState } from '../types/movie';
+import { STORAGE_KEYS } from '../lib/constants';
 
 export const useMovieStore = create<MovieStoreState>()(
   persist(

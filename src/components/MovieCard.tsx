@@ -5,7 +5,7 @@ import { Heart, Star } from 'lucide-react';
 import { cn, getPosterUrl, formatRating, getReleaseYear } from '../lib/utils';
 import { useMovieStore } from '../store/movieStore';
 import { useToast } from '../components/Toastprovider';
-import type { Movie } from '@/types/../types/movie';
+import type { Movie } from '../types/movie';
 
 interface MovieCardProps {
   movie: Movie;

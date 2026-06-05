@@ -169,7 +169,7 @@ export function Header() {
                   key={link.to}
                   to={link.to}
                   end={link.end}
-                  onClick={closeMobileMenu}
+                  onClick={closeMobile}
                   className={({ isActive }) => cn('nav-link', isActive && 'nav-link--active')}
                 >
                   {link.label}
@@ -181,7 +181,7 @@ export function Header() {
                 type="button"
                 onClick={() => {
                   navigate('/search');
-                  closeMobileMenu();
+                  closeMobile();
                 }}
                 className="nav-link text-left flex items-center gap-[var(--space-2)]"
               >

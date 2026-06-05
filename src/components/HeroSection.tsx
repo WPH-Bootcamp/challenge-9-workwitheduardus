@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 import { Play, Info, Star, Calendar, Heart } from 'lucide-react';
 import { cn, getBackdropUrl, formatRating, formatDate } from '@/lib/utils';
 import { useMovieStore } from '@/store/movieStore';
-import { useToast } from '@/components/ToastProvider';
-import { Button } from '@/components/ui/button';
+import { useToast } from '../components/Toastprovider';
+import { Button } from '../components/ui/Button';
 import type { Movie } from '@/types/movie';
 
 interface HeroSectionProps {
@@ -117,7 +117,7 @@ export function HeroSection({ movie }: HeroSectionProps) {
                 'border transition-colors duration-200',
                 '[backdrop-filter:blur(20px)]',
                 faved
-                  ? 'bg-[rgba(150,18,0,0.8)] border-[var(--color-brand-red)] text-[var(--color-gray-white)]'
+                  ? 'bg-[var(--color-brand-900)] border-[var(--color-brand-red)] text-[var(--color-gray-white)]'
                   : 'bg-[rgba(10,13,18,0.6)] border-[var(--color-gray-900)] text-[var(--color-gray-white)] hover:border-[var(--color-gray-500)]'
               )}
             >

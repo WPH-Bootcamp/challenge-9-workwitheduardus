@@ -5,23 +5,30 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './index.css';
 import App from './App.tsx';
 
-// TODO: Configure QueryClient with appropriate default options
-// Reference: https://tanstack.com/query/latest/docs/framework/react/reference/QueryClient
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      // TODO: Configure default query options
-      // Examples: refetchOnWindowFocus, retry, staleTime, etc.
-    },
-  },
-});
+const rootEl = document.getElementById('root');
+if (!rootEl) {
+  throw new Error('[main] Root element #root not found. Check index.html.');
+}
 
-createRoot(document.getElementById('root')!).render(
+createRoot(rootEl).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-      {/* React Query Devtools - useful for debugging */}
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <App />
   </StrictMode>
 );
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

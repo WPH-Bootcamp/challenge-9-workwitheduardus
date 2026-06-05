@@ -1,42 +1,59 @@
 import './index.css';
 
-function App() {
-  // TODO: Setup routing dengan React Router
-  // TODO: Implement layout structure
-  // TODO: Add navigation between pages
+import { Suspense, lazy } from 'react'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools }  from '@tanstack/react-query-devtools'
+import { AnimatePresence }from 'framer-motion'
+import { queryClient }from './lib/queryClient'
+import { Header }from './components/Header'
+import { ToastProvider }from './components/Toastprovider'
+import { LoadingSpinner }from './components/ErrorState'
 
+const HomePage= lazy(() => import('./pages/HomePage'))
+const MovieDetailPage= lazy(() => import('./pages/MovieDetailPage'))
+const SearchPage= lazy(() => import('./pages/SearchPage'))
+const FavoritesPage= lazy(() => import('./pages/FavoritePage'))
+const NotFoundPage= lazy(() => import('@/pages/NotFoundPage'))
+ 
+function AppRoutes() {
+  const location = useLocation()
+ 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b">
-        <div className="container mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold">Movie Explorer</h1>
-          {/* TODO: Add navigation menu */}
-        </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-8">
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl font-bold">Challenge 9 - Movie App</h2>
-          <p className="text-muted-foreground">
-            Mulai dengan membaca README.md untuk instruksi lengkap!
-          </p>
-
-          <div className="mt-8 p-6 border rounded-lg bg-card">
-            <h3 className="text-xl font-semibold mb-2">Langkah Pertama:</h3>
-            <ol className="text-left space-y-2 max-w-2xl mx-auto">
-              <li>1. Copy file .env.example menjadi .env</li>
-              <li>2. Daftar di TheMovieDB dan dapatkan API key</li>
-              <li>3. Isi VITE_TMDB_API_KEY di file .env</li>
-              <li>4. Jalankan npm install untuk menginstall dependencies</li>
-              <li>5. Mulai develop dengan npm run dev</li>
-            </ol>
-          </div>
-        </div>
-
-        {/* TODO: Replace this with your actual application routes and components */}
+    <>
+      <Header />
+ 
+      <main>
+        <Suspense fallback={<LoadingSpinner size={36} />}>
+          {/* AnimatePresence enables exit animations between pages */}
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/"element={<HomePage />} />
+              <Route path="/movie/:id" element={<MovieDetailPage />} />
+              <Route path="/search"element={<SearchPage />} />
+              <Route path="/favorites" element={<FavoritesPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </AnimatePresence>
+        </Suspense>
       </main>
-    </div>
-  );
+    </>
+  )
 }
-
-export default App;
+ 
+// Root App 
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ToastProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </ToastProvider>
+ 
+      {import.meta.env.DEV && (
+        <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
+      )}
+    </QueryClientProvider>
+  )
+}

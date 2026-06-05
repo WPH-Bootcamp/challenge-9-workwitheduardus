@@ -3,24 +3,6 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Movie, FavoriteMovie, WatchlistMovie, MovieStoreState } from '@/types/movie';
 import { STORAGE_KEYS } from '@/lib/constants';
 
-// TODO: Define your store state interface
-interface Movie {
-  // State
-  favorites: FavoriteMovie[];
-  watchlist: WatchlistMovie[];
-  // Favorite
-  addFavorite: (movie: Movie) => void;
-  removeFavorite: (movieId: number) => void;
-  isFavorite: (movieId: number) => boolean;
-  clearFavorites: () => void;
-  // Watchlist
-  addToWatchlist: (movie: Movie) => void;
-  removeFromWatchlist: (movieId: number) => void;
-  isInWatchlist: (movieId: number) => boolean;
-  clearWatchlist: () => void;
-}
-
-// Zustand Store
 export const useMovieStore = create<MovieStoreState>()(
   persist(
     (set, get) => ({
@@ -28,14 +10,11 @@ export const useMovieStore = create<MovieStoreState>()(
       favorites: [],
       watchlist: [],
 
-      // Favorite
+      //  Favorites 
       addFavorite: (movie: Movie) => {
-        // Guard: prevent duplicates
         if (get().isFavorite(movie.id)) return;
         const item: FavoriteMovie = { ...movie, added_at: Date.now() };
-        set((state) => ({
-          favorites: [item, ...state.favorites],
-        }));
+        set((state) => ({ favorites: [item, ...state.favorites] }));
       },
 
       removeFavorite: (movieId: number) => {
@@ -44,21 +23,17 @@ export const useMovieStore = create<MovieStoreState>()(
         }));
       },
 
-      isFavorite: (movieId: number) => {
+      isFavorite: (movieId: number): boolean => {
         return get().favorites.some((m) => m.id === movieId);
       },
 
       clearFavorites: () => set({ favorites: [] }),
 
-      // Watchlist
+      //  Watchlist 
       addToWatchlist: (movie: Movie) => {
-        // Guard: prevent duplicates
         if (get().isInWatchlist(movie.id)) return;
-
         const item: WatchlistMovie = { ...movie, added_at: Date.now() };
-        set((state) => ({
-          watchlist: [item, ...state.watchlist],
-        }));
+        set((state) => ({ watchlist: [item, ...state.watchlist] }));
       },
 
       removeFromWatchlist: (movieId: number) => {
@@ -67,14 +42,13 @@ export const useMovieStore = create<MovieStoreState>()(
         }));
       },
 
-      isInWatchlist: (movieId: number) => {
+      isInWatchlist: (movieId: number): boolean => {
         return get().watchlist.some((m) => m.id === movieId);
       },
 
       clearWatchlist: () => set({ watchlist: [] }),
     }),
     {
-      // localStorage key
       name: STORAGE_KEYS.favorites,
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({

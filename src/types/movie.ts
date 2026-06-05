@@ -38,6 +38,8 @@ export interface MovieDetail {
   revenue: number;
   original_language: string;
   popularity: number;
+  adult: boolean;
+  video: boolean;
   homepage: string | null;
   production_companies: ProductionCompany[];
   spoken_languages: SpokenLanguage[];

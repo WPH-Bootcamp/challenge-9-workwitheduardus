@@ -1,21 +1,82 @@
 import api from '@/lib/axios';
-// import { Movie, MovieResponse } from '@/types/movie';
+import { API_ENDPOINTS } from '../lib/constants';
+import type { MovieDetail, MoviesResponse, Genre, MovieFilters } from '../types/movie';
 
-// TODO: Create service functions to fetch data from TMDB API
-// Reference: https://developer.themoviedb.org/reference/intro/getting-started
+// Response
+interface GenresResponse {
+  genres: Genre[];
+}
 
+// Movie Service
 export const movieService = {
-  // TODO: Implement getPopularMovies function
-  // Endpoint: GET /movie/popular
+  getPopularMovies: async (page = 1): Promise<MoviesResponse> => {
+    const { data } = await api.get<MoviesResponse>(API_ENDPOINTS.popular, {
+      params: { page },
+    });
+    return data;
+  },
 
-  // TODO: Implement getNowPlayingMovies function
-  // Endpoint: GET /movie/now_playing
+  getNowPlayingMovies: async (page = 1): Promise<MoviesResponse> => {
+    const { data } = await api.get<MoviesResponse>(API_ENDPOINTS.nowPlaying, {
+      params: { page },
+    });
+    return data;
+  },
 
-  // TODO: Implement getMovieDetails function
-  // Endpoint: GET /movie/{movie_id}
+  getTopRatedMovies: async (page = 1): Promise<MoviesResponse> => {
+    const { data } = await api.get<MoviesResponse>(API_ENDPOINTS.topRated, {
+      params: { page },
+    });
+    return data;
+  },
 
-  // TODO: Implement searchMovies function
-  // Endpoint: GET /search/movie
+  getUpcomingMovies: async (page = 1): Promise<MoviesResponse> => {
+    const { data } = await api.get<MoviesResponse>(API_ENDPOINTS.upcoming, {
+      params: { page },
+    });
+    return data;
+  },
 
-  // TODO: Add more endpoints as needed
+  getTrendingMovies: async (page = 1): Promise<MoviesResponse> => {
+    const { data } = await api.get<MoviesResponse>(API_ENDPOINTS.trending, {
+      params: { page },
+    });
+    return data;
+  },
+
+  getMovieDetails: async (movieId: number): Promise<MovieDetail> => {
+    const { data } = await api.get<MovieDetail>(API_ENDPOINTS.details(movieId), {
+      params: { append_to_response: 'videos,credits,similar,recommendations' },
+    });
+    return data;
+  },
+
+  searchMovies: async (query: string, page = 1): Promise<MoviesResponse> => {
+    const { data } = await api.get<MoviesResponse>(API_ENDPOINTS.search, {
+      params: { query: query.trim(), page, include_adult: false },
+    });
+    return data;
+  },
+
+  getGenres: async (): Promise<Genre[]> => {
+    const { data } = await api.get<GenresResponse>(API_ENDPOINTS.genres);
+    return data.genres;
+  },
+
+  discoverMovies: async (filters: MovieFilters = {}): Promise<MoviesResponse> => {
+    const { genre, sort = 'popularity.desc', year, page = 1 } = filters;
+    const { data } = await api.get<MoviesResponse>(API_ENDPOINTS.discover, {
+      params: {
+        with_genres: genre || undefined,
+        sort_by: sort,
+        primary_release_year: year || undefined,
+        page,
+        include_adult: false,
+        'vote_count.gte': 50,
+      },
+    });
+    return data;
+  },
 };
+
+export default movieService;
